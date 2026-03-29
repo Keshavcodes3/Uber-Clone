@@ -18,8 +18,10 @@ const CaptainLogin = () => {
     e.preventDefault();
 
     const data = await handleLogin(form);
-
+    console.log(data)
     if (data?.success) {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('userType', 'captain');
       navigate("/captain/home"); 
     }
   };

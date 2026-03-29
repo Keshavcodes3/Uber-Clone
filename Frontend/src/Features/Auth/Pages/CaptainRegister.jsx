@@ -41,6 +41,8 @@ const CaptainRegister = () => {
     const captain = await handleRegister(captainData);
 
     if (captain?.success) {
+      localStorage.setItem('token', captain.token);
+      localStorage.setItem('userType', 'captain');
       navigate("/captain/home"); 
     }
   };

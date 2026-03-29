@@ -9,6 +9,7 @@ import ProtectedWrapper from "./protectedWrapper";
 import UserLogOut from "../Features/Auth/Pages/UserLogOut";
 import CaptainLogout from "../Features/Auth/Pages/captainLogout";
 import CaptainHome from "../Features/Home/CaptainHome";
+import CaptainProtectedWrapper from "./CaptainProtectedWrapper";
 
 export const router = createBrowserRouter([
     {
@@ -43,10 +44,14 @@ export const router = createBrowserRouter([
     },
     {
         path:'/captain/logout',
-        element:<CaptainLogout/>
+        element:<CaptainProtectedWrapper>
+            <CaptainLogout/>
+        </CaptainProtectedWrapper>
     },
     {
         path:'/captain/home',
-        element:<CaptainHome/>
+        element:<CaptainProtectedWrapper>
+            <CaptainHome/>
+        </CaptainProtectedWrapper>
     }
 ])

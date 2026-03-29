@@ -31,7 +31,7 @@ const UserSignup = () => {
     if (user?.success) {
         console.log(user)
         localStorage.setItem('token',user.token)
-        navigate("/home");
+        navigate("/");
     }
   };
 
