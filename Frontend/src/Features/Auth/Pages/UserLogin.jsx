@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 const UserLogin = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -22,10 +21,11 @@ const UserLogin = () => {
 
     if (user?.success) {
       console.log(user);
+      localStorage.setItem('token',user.token)
       setForm({ ...form, [e.target.name]: " " });
       navigate("/");
     }else{
-        navigate('/user-login')
+        navigate('/user/login')
     }
   };
 
@@ -69,7 +69,7 @@ const UserLogin = () => {
           </div>
 
           {/* Captain Login */}
-          <Link to="/captain-login">
+          <Link to="/captain/login">
             <button className="w-full border border-gray-300 py-3 rounded-lg font-medium hover:bg-gray-100 transition">
               Login as Captain 🚗
             </button>
@@ -80,7 +80,7 @@ const UserLogin = () => {
         <p className="text-center text-sm text-gray-500 mt-6">
           New here?{" "}
           <Link
-            to="/user-signup"
+            to="/user/signup"
             className="text-grayp-600 font-medium underline"
           >
             Create account

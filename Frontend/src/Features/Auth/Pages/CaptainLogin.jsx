@@ -1,19 +1,27 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import { useCaptain } from "../Hooks/useCaptain";
 const CaptainLogin = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
+  const { handleLogin } = useCaptain();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
+
+    const data = await handleLogin(form);
+
+    if (data?.success) {
+      navigate("/captain/home"); 
+    }
   };
 
   return (
@@ -68,7 +76,7 @@ const CaptainLogin = () => {
           </div>
 
           {/* Register CTA */}
-          <Link to="/captain-signup">
+          <Link to="/captain/signup">
             <button className="w-full border border-gray-300 py-3 rounded-lg font-medium hover:bg-gray-100 transition">
               Sign up as Captain 🚗
             </button>
@@ -78,7 +86,7 @@ const CaptainLogin = () => {
         {/* Footer */}
         <p className="text-center text-sm text-gray-500 mt-6">
           Not a captain?{" "}
-          <Link to="/user-signup" className="text-black font-medium underline">
+          <Link to="/user/signup" className="text-black font-medium underline">
             Sign up as User
           </Link>
         </p>

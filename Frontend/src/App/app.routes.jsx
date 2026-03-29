@@ -6,6 +6,9 @@ import UserSignup from "../Features/Auth/Pages/UserSignup";
 import CaptainRegister from "../Features/Auth/Pages/CaptainRegister";
 import CaptainLogin from "../Features/Auth/Pages/CaptainLogin";
 import ProtectedWrapper from "./protectedWrapper";
+import UserLogOut from "../Features/Auth/Pages/UserLogOut";
+import CaptainLogout from "../Features/Auth/Pages/captainLogout";
+import CaptainHome from "../Features/Home/CaptainHome";
 
 export const router = createBrowserRouter([
     {
@@ -19,19 +22,31 @@ export const router = createBrowserRouter([
         </ProtectedWrapper>
     },
     {
-        path:'/user-login',
+        path:'/user/login',
         element:<UserLogin/>
     },
     {
-        path:'/user-signup',
+        path:'/user/signup',
         element:<UserSignup/>
     },
     {
-        path:'/captain-signup',
+        path:'/captain/signup',
         element:<CaptainRegister/>
     },
     {
-        path:'/captain-login',
+        path:'/captain/login',
         element:<CaptainLogin/>
+    },
+    {
+        path:'/user/logout',
+        element:<UserLogOut/>
+    },
+    {
+        path:'/captain/logout',
+        element:<CaptainLogout/>
+    },
+    {
+        path:'/captain/home',
+        element:<CaptainHome/>
     }
 ])

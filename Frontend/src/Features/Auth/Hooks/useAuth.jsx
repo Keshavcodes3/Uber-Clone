@@ -14,6 +14,7 @@ export const useAuth = () => {
       dispatch(setLoading(true));
       const data = await registerUser(userData);
       if (data?.success) {
+
         dispatch(setUser(data.user));
         dispatch(setError(null));
       } else {
@@ -35,6 +36,7 @@ export const useAuth = () => {
       dispatch(setLoading(true));
       const data = await loginUser(userData);
       if (data?.success) {
+        
         dispatch(setUser(data.user));
         dispatch(setError(null));
       } else {
@@ -78,6 +80,7 @@ export const useAuth = () => {
     try {
       const data = await logOutUser();
       if (data?.success) {
+        localStorage.removeItem('token')
         dispatch(setUser(null));
         dispatch(setError(null));
       } else {

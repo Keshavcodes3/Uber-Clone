@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useCaptain } from "../Hooks/useCaptain";
 const CaptainRegister = () => {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
@@ -13,15 +13,17 @@ const CaptainRegister = () => {
     capacity: "",
     vehicleType: "",
   });
+  const navigate = useNavigate();
+  const { handleRegister } = useCaptain();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const payload = {
+    const captainData = {
       fullname: {
         firstname: form.firstname,
         lastname: form.lastname,
@@ -36,21 +38,21 @@ const CaptainRegister = () => {
       },
     };
 
-    console.log(payload);
+    const captain = await handleRegister(captainData);
+
+    if (captain?.success) {
+      navigate("/captain/home"); 
+    }
   };
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-4 sm:px-4">
-
       <div className="w-full max-w-md">
-
         {/* Header */}
         <h1 className="text-3xl font-semibold text-gray-900 mb-1">
           Become a Captain
         </h1>
-        <p className="text-gray-500 text-sm mb-6">
-          Step {step} of 2
-        </p>
+        <p className="text-gray-500 text-sm mb-6">Step {step} of 2</p>
 
         {/* Progress Bar */}
         <div className="w-full h-1 bg-gray-200 rounded mb-6">
@@ -62,7 +64,6 @@ const CaptainRegister = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           {/* STEP 1 */}
           {step === 1 && (
             <>
@@ -136,7 +137,7 @@ const CaptainRegister = () => {
               >
                 <option value="">Vehicle type</option>
                 <option value="car">Car</option>
-                <option value="bike">Bike</option>
+                <option value="motorcycle">Bike</option>
                 <option value="auto">Auto</option>
               </select>
 
@@ -163,7 +164,10 @@ const CaptainRegister = () => {
         {/* Footer */}
         <p className="text-center text-sm text-gray-500 mt-6">
           Already a captain?{" "}
-          <Link to="/captain-login" className="text-black font-medium underline">
+          <Link
+            to="/captain/login"
+            className="text-black font-medium underline"
+          >
             Login
           </Link>
         </p>

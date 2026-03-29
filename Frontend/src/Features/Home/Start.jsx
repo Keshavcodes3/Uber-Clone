@@ -40,7 +40,7 @@ const Start = () => {
         <div className="space-y-3">
           {/* Continue Button */}
           <button
-            onClick={() => navigate("/user-signup")}
+            onClick={() => navigate("/user/signup")}
             className="w-full flex items-center justify-between bg-black text-white px-4 py-3 rounded-lg font-medium hover:bg-gray-900 transition"
           >
             Continue
@@ -49,7 +49,7 @@ const Start = () => {
 
           {/* Captain CTA */}
           <button
-            onClick={() => navigate("/captain-signup")}
+            onClick={() => navigate("/captain/signup")}
             className="w-full flex items-center justify-between border border-gray-300 px-4 py-3 rounded-lg font-medium hover:bg-gray-100 transition"
           >
             Continue as Captain 🚗

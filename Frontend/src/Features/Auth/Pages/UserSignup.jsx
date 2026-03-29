@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Hooks/useAuth";
 const UserSignup = () => {
-    const navigate=useNavigate()
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     firstname: "",
     lastname: "",
@@ -15,7 +15,7 @@ const UserSignup = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const userData = {
@@ -27,29 +27,26 @@ const UserSignup = () => {
       password: form.password,
     };
 
-    console.log(userData);
-    const user=await handleRegister(userData)
-    navigate('/home')
+    const user = await handleRegister(userData);
+    if (user?.success) {
+        console.log(user)
+        localStorage.setItem('token',user.token)
+        navigate("/home");
+    }
   };
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-4">
-
       <div className="w-full max-w-md">
-
         {/* Header */}
         <h1 className="text-3xl font-semibold text-gray-900 mb-1">
           Create account
         </h1>
-        <p className="text-gray-500 text-sm mb-6">
-          Start your journey with us
-        </p>
+        <p className="text-gray-500 text-sm mb-6">Start your journey with us</p>
 
         {/* Card */}
         <div className="border rounded-2xl p-6 shadow-sm">
-
           <form onSubmit={handleSubmit} className="space-y-4">
-
             <div className="flex gap-3">
               <input
                 name="firstname"
@@ -93,7 +90,7 @@ const UserSignup = () => {
           </div>
 
           {/* Captain CTA */}
-          <Link to="/captain-signup">
+          <Link to="/captain/signup">
             <button className="w-full border border-gray-300 py-3 rounded-lg font-medium hover:bg-gray-100 transition">
               Sign up as Captain 🚗
             </button>
@@ -103,7 +100,10 @@ const UserSignup = () => {
         {/* Footer */}
         <p className="text-center text-sm text-gray-500 mt-6">
           Already have an account?{" "}
-          <Link to="/user-login" className="text-gray-600 font-medium underline">
+          <Link
+            to="/user/login"
+            className="text-gray-600 font-medium underline"
+          >
             Login
           </Link>
         </p>
