@@ -1,80 +1,74 @@
-import React, { useState } from "react";
+import React from "react";
 import { Assets } from "../../Assets/Assets";
+import { Clock, IndianRupee, Star, LogOut } from "lucide-react";
+import RidePopUp from "./Components/Captain/RidePopUp";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const CaptainHome = () => {
-  const [expanded, setExpanded] = useState(false);
-  const [location, setlocation] = useState("");
-  const [destination, setdestination] = useState("");
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const Data = {
-      location: location,
-      destination: destination,
-    };
-    setlocation("");
-    setdestination("");
+  const [isOnline, setisOnline] = useState(false);
+  const [expanded, setexpanded] = useState(true);
+  const navigate = useNavigate();
+
+  const handleProfileClick = () => {
+    navigate("/captain/profile");
   };
 
   return (
-    <div className="h-screen w-screen relative overflow-hidden">
-      {/* Logo */}
-      <img
-        src={Assets[0].image}
-        alt={Assets[0].alt}
-        className="w-16 absolute left-5 top-5 z-20"
-      />
+    <>
+      <div className="h-screen w-full relative bg-gray-100">
+        {/* 🗺️ Top Map Section */}
+        <div className="h-[52%] w-full">
+          <img
+            src={Assets[1].image}
+            alt="map"
+            className="w-full h-full object-cover"
+          />
+          <button
+            onClick={handleProfileClick}
+            className="h-7 w-7 absolute top-2 right-2 rounded-full bg-white flex justify-center items-center hover:bg-gray-100 transition"
+          >
+            <h1 className="right-3 top-1">
+              <LogOut size={21} />
+            </h1>
+          </button>
+        </div>
 
-      {/* Background */}
-      <img
-        src={Assets[1].image}
-        alt="map"
-        className="h-full w-full object-cover"
-      />
+        {/* 🚗 Bottom Sheet */}
+        {expanded && (
+          <div className="absolute bottom-0 w-full bg-white rounded-t-3xl shadow-lg p-5 flex flex-col gap-5">
+            {/* Handle (like Uber) */}
+            <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto"></div>
 
-      {/* Bottom Sheet */}
-      <form
-        onSubmit={(e) => handleSubmit(e)}
-        className={`absolute w-full bg-white rounded-t-3xl p-5 shadow-xl z-20 transition-all duration-500 ease-in-out
-        ${expanded ? "bottom-0 h-[90%]" : "bottom-0 h-[45%]"}`}
-      >
-        {/* Handle */}
-        <div
-          onClick={() => setExpanded(!expanded)}
-          className="w-10 h-1 bg-gray-300 rounded-full mx-auto mb-4"
-        ></div>
+            <div className="flex justify-between items-center">
+              <p className="text-gray-500">
+                You are {isOnline ? "Online" : "Offline"}
+              </p>
 
-        {/* Title */}
-        <h2 className="text-xl font-semibold mb-4">Find a trip</h2>
+              {/* Toggle (UI only) */}
+              <button
+                onClick={() => setisOnline(!isOnline)}
+                className={`w-12 h-6 rounded-full flex items-center px-1 transition-colors duration-300 ${
+                  isOnline ? "bg-green-500" : "bg-gray-700"
+                }`}
+              >
+                <div
+                  className={`w-4 h-4 bg-white rounded-full shadow transform transition-transform duration-300 ${
+                    isOnline ? "translate-x-6" : "translate-x-0"
+                  }`}
+                ></div>
+              </button>
+            </div>
 
-        {/* Form */}
-        <form className="space-y-3">
-          <div className="flex items-center bg-gray-100 rounded-lg px-3 py-3">
-            <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
-            <input
-              type="text"
-              onChange={(e) => setlocation(e.target.value)}
-              placeholder="Add a pickup location"
-              className="bg-transparent w-full outline-none text-sm"
-            />
+            {/* Ride Popup */}
+            <RidePopUp expanded={expanded} setexpanded={setexpanded} />
           </div>
+        )}
 
-          <div className="flex items-center bg-gray-100 rounded-lg px-3 py-3">
-            <span className="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
-            <input
-              type="text"
-              onChange={(e) => setdestination(e.target.value)}
-              placeholder="Enter your destination"
-              className="bg-transparent w-full outline-none text-sm"
-            />
-          </div>
-        </form>
-
-        {/* Button */}
-        <button className="w-full bg-black text-white py-3 rounded-lg mt-4 font-medium">
-          Search Ride
-        </button>
-      </form>
-    </div>
+        {/* Navigate to profile when not expanded */}
+        {!expanded && handleProfileClick()}
+      </div>
+    </>
   );
 };
 

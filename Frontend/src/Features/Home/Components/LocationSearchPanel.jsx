@@ -1,10 +1,15 @@
 import React from "react";
 import { MapPin } from "lucide-react";
 import { Vehicles } from "../../../Assets/Assets";
-
-const CarDetailBox = () => (
-  <>
-    <div className="flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm border hover:shadow-md transition cursor-pointer">
+import { useState } from "react";
+import Riding from "./User/Riding";
+import { Link } from "react-router-dom";
+const CarDetailBox = ({ onClick }) => (
+  <div className="flex flex-col gap-5">
+    <div
+      onClick={onClick}
+      className="flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm border hover:shadow-md transition cursor-pointer"
+    >
       {/* Left: Image */}
       <img
         src={Vehicles[0].image}
@@ -67,23 +72,28 @@ const CarDetailBox = () => (
       {/* Right: Price */}
       <h2 className="font-semibold text-lg text-gray-900">₹230</h2>
     </div>
-  </>
+  </div>
 );
 
 const LocationSearchPanel = ({ setVehiclePanel }) => {
+  const [openRidingPage, setopenRidingPage] = useState(false);
   return (
-    <div className="w-full flex flex-col gap-y-4">
-      {/* Back Button */}
-      <button
-        onClick={() => setVehiclePanel(false)}
-        className="text-sm text-gray-500"
-      >
-        ← Back
-      </button>
+    <div className="w-full h-full">
+      <div className="w-full flex flex-col gap-y-4">
+        {/* Back Button */}
+        <button
+          onClick={() => setVehiclePanel(false)}
+          className="text-sm text-gray-500"
+        >
+          ← Back
+        </button>
 
-      <h1 className="text-xl font-semibold">Choose a Vehicle</h1>
+        <h1 className="text-xl font-semibold">Choose a Vehicle</h1>
 
-      <CarDetailBox />
+        <Link to={"/user/riding"}>
+          <CarDetailBox onClick={() => setopenRidingPage(!openRidingPage)} />
+        </Link>
+      </div>
     </div>
   );
 };
